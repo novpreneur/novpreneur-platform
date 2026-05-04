@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { findUserByEmail, updateUser } from "@/lib/users";
 import { generateVerificationCode } from "@/lib/auth";
+import { sendVerificationEmail } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -88,12 +89,12 @@ export async function PATCH(req: NextRequest) {
       verificationCodeExpiry: expiry,
     });
 
-    console.log(`\n📧 NEW VERIFICATION CODE for ${email}: ${code}\n`);
+    // Send verification email
+    await sendVerificationEmail(email, code, user.fullName || "User");
 
     return NextResponse.json({
       success: true,
-      message: "New code sent.",
-      ...(process.env.NODE_ENV !== "production" && { verificationCode: code }),
+      message: "New verification code sent to your email.",
     });
   } catch {
     return NextResponse.json({ error: "Failed to resend." }, { status: 500 });

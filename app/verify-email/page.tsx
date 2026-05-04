@@ -9,7 +9,6 @@ function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const emailParam = searchParams.get("email") || "";
-  const codeParam = searchParams.get("code") || "";
 
   const [email] = useState(emailParam);
   const [code, setCode] = useState("");
@@ -102,20 +101,7 @@ function VerifyEmailContent() {
         </p>
       </div>
 
-      {/* Dev helper — show code */}
-      {codeParam && (
-        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-[6px]">
-          <p className="text-[11px] font-semibold text-yellow-700 uppercase tracking-wider mb-1">
-            Development Mode
-          </p>
-          <p className="text-[13px] text-yellow-800">
-            Your verification code is: <strong className="font-mono text-[15px]">{codeParam}</strong>
-          </p>
-          <p className="text-[11px] text-yellow-600 mt-1">
-            In production, this would be sent via email.
-          </p>
-        </div>
-      )}
+      {/* Code is sent via email */}
 
       <form onSubmit={handleVerify} className="space-y-4">
         <div>

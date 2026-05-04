@@ -54,9 +54,9 @@ export default function RegisterPage() {
         throw new Error(data.error || "Registration failed");
       }
 
-      // Redirect to verification page
+      // Redirect to verification page — code is sent via email
       router.push(
-        `/verify-email?email=${encodeURIComponent(form.email)}&code=${data.verificationCode}`
+        `/verify-email?email=${encodeURIComponent(form.email)}`
       );
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
