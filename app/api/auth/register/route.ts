@@ -55,8 +55,8 @@ export async function POST(req: NextRequest) {
         success: true,
         message: "Account created. Please verify your email.",
         email: user.email,
-        // Include code in dev response so user can verify
-        verificationCode: code,
+        // Only include code in dev response — NEVER in production
+        ...(process.env.NODE_ENV !== "production" && { verificationCode: code }),
       },
       { status: 201 }
     );

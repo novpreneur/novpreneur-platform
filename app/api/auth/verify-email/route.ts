@@ -93,7 +93,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({
       success: true,
       message: "New code sent.",
-      verificationCode: code,
+      ...(process.env.NODE_ENV !== "production" && { verificationCode: code }),
     });
   } catch {
     return NextResponse.json({ error: "Failed to resend." }, { status: 500 });
